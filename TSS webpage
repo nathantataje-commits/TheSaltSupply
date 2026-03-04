@@ -1,0 +1,181 @@
+import React, { useState } from 'react';
+import { 
+  Heart, 
+  Coffee, 
+  Wrench, 
+  MessageCircle, 
+  MapPin, 
+  User, 
+  ShieldCheck, 
+  Star,
+  PlusCircle,
+  Zap,
+  TrendingUp,
+  Award,
+  ChevronRight,
+  Users
+} from 'lucide-react';
+
+/**
+ * THE SALT SUPPLY - VERSION 3.0
+ * Features: Need Feed, Social Space (Micro-Kindness), and Alpha Staff Profiles.
+ * Fully responsive for desktop and mobile.
+ */
+
+const App = () => {
+  const [view, setView] = useState('feed');
+  
+  const [needs] = useState([
+    {
+      id: 1,
+      type: 'Restoration',
+      title: 'Emergency: Furnace Failure',
+      location: 'Waukesha, WI',
+      author: 'Evelyn M.',
+      urgency: 'Critical',
+      description: 'Furnace went out last night. Temperature is dropping. Need an HVAC tech for a quick look. Staffing Vow credentials required.',
+      tokens: 150,
+      icon: <Wrench className="w-5 h-5" />
+    },
+    {
+      id: 2,
+      type: 'Micro-Kindness',
+      title: 'Coffee & Resume Review',
+      location: 'Milwaukee (Downtown)',
+      author: 'Chris P.',
+      urgency: 'Low',
+      description: 'Recent grad feeling overwhelmed with the job search. Would love to grab coffee and get some life advice.',
+      tokens: 25,
+      icon: <Coffee className="w-5 h-5" />
+    },
+    {
+      id: 3,
+      type: 'Social',
+      title: 'Friend for a Walk',
+      location: 'Madison, WI',
+      author: 'Thomas R.',
+      urgency: 'Low',
+      description: 'Feeling a bit isolated lately. Looking for someone to go for a walk at the park and talk about faith.',
+      tokens: 15,
+      icon: <Users className="w-5 h-5" />
+    }
+  ]);
+
+  return (
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-blue-100">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView('feed')}>
+            <div className="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-200">
+              <ShieldCheck className="text-white w-6 h-6" />
+            </div>
+            <div className="hidden sm:block">
+              <span className="font-black text-xl tracking-tighter block leading-none">THE SALT SUPPLY</span>
+              <span className="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">Wisconsin Corridor</span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 sm:gap-6">
+            <button onClick={() => setView('feed')} className={`px-4 py-2 font-bold text-sm rounded-xl transition-all ${view === 'feed' ? 'text-blue-600 bg-blue-50' : 'text-slate-500'}`}>Need Feed</button>
+            <button onClick={() => setView('social')} className={`px-4 py-2 font-bold text-sm rounded-xl transition-all ${view === 'social' ? 'text-blue-600 bg-blue-50' : 'text-slate-500'}`}>Social Space</button>
+            <button onClick={() => setView('profile')} className="bg-slate-100 border border-slate-200 px-4 py-2 rounded-2xl flex items-center gap-2">
+              <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+              <span className="text-sm font-black text-slate-700">820</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main className="max-w-4xl mx-auto p-6 py-12">
+        {view === 'feed' && (
+          <div className="space-y-10">
+            <header className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
+              <div>
+                <h1 className="text-5xl font-black tracking-tighter text-slate-900">Need Feed</h1>
+                <p className="text-slate-500 font-bold mt-1">"Restoration over Transaction."</p>
+              </div>
+              <button className="w-full sm:w-auto bg-blue-600 text-white px-10 py-4 rounded-2xl font-black flex items-center justify-center gap-2 hover:bg-blue-700 shadow-2xl shadow-blue-100 transition-all active:scale-95">
+                <PlusCircle className="w-5 h-5" /> Post a Need
+              </button>
+            </header>
+
+            <div className="grid gap-6">
+              {needs.map(need => (
+                <div key={need.id} className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm hover:shadow-2xl hover:border-blue-400 transition-all group">
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="flex items-center gap-6">
+                      <div className="p-5 bg-blue-50 text-blue-600 rounded-3xl group-hover:bg-blue-600 group-hover:text-white transition-all">
+                        {need.icon}
+                      </div>
+                      <div>
+                        <h3 className="font-black text-2xl text-slate-900">{need.title}</h3>
+                        <div className="flex items-center gap-2 text-sm font-bold text-slate-400 mt-1">
+                          <MapPin className="w-4 h-4 text-blue-400" /> {need.location} • {need.author}
+                        </div>
+                      </div>
+                    </div>
+                    <span className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                      need.urgency === 'Critical' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'
+                    }`}>
+                      {need.urgency}
+                    </span>
+                  </div>
+                  <p className="text-slate-600 leading-relaxed mb-8 text-xl font-medium italic">"{need.description}"</p>
+                  <div className="flex flex-col sm:flex-row justify-between items-center border-t border-slate-100 pt-8 gap-6">
+                    <div className="flex items-center gap-3 text-amber-600">
+                      <Zap className="w-6 h-6 fill-amber-500" />
+                      <span className="text-2xl font-black">{need.tokens} Salt Tokens</span>
+                    </div>
+                    <button className="w-full sm:w-auto bg-slate-900 text-white px-12 py-4 rounded-2xl font-black hover:bg-blue-600 transition-all shadow-xl active:scale-95 flex items-center justify-center gap-2">
+                      Respond <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {view === 'social' && (
+          <div className="space-y-12">
+            <div className="bg-gradient-to-br from-blue-700 to-blue-900 p-12 sm:p-16 rounded-[4rem] text-white shadow-3xl relative overflow-hidden">
+              <div className="relative z-10">
+                <h2 className="text-5xl font-black mb-4 tracking-tighter">The Commons</h2>
+                <p className="text-blue-100 text-xl mb-10 max-w-lg font-medium leading-relaxed">Where asking for help is an act of belonging. Connect with the Wisconsin Corridor.</p>
+                <div className="flex flex-wrap gap-4">
+                  <button className="bg-white text-blue-800 px-8 py-4 rounded-2xl font-black hover:shadow-xl transition-all">Request Micro-Kindness</button>
+                  <button className="bg-white/10 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-black border border-white/20 hover:bg-white/20 transition-all">Restoration Stories</button>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-8">
+              <div className="bg-white p-10 rounded-[3rem] border border-slate-200 shadow-sm">
+                <div className="flex items-center gap-3 mb-8">
+                  <TrendingUp className="text-blue-600 w-8 h-8" />
+                  <h3 className="font-black text-2xl tracking-tight text-slate-900">Regional Impact</h3>
+                </div>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-slate-400 uppercase text-xs tracking-widest">Lives Restored</span>
+                    <span className="text-4xl font-black text-blue-600">1,204</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold text-slate-400 uppercase text-xs tracking-widest">Alpha Staff</span>
+                    <span className="text-4xl font-black text-blue-600">342</span>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-[#FFFBEB] p-10 rounded-[3rem] border border-amber-200 shadow-sm text-center flex flex-col items-center justify-center">
+                <Award className="w-16 h-16 text-amber-500 mb-6" />
+                <h3 className="font-black text-2xl mb-2 tracking-tight">Salt of the Week</h3>
+                <p className="text-slate-600 font-medium">Mark T. fixed 3 boilers in the cold snap.</p>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default App;
