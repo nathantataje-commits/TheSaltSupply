@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Salt Supply | Staffing for the Soul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+    <!-- This is the single-file version of the React platform you saw earlier -->
+    <div id="app"></div>
+
+    <script type="module">
+        import React, { useState } from 'https://esm.sh/react@18.2.0';
+        import ReactDOM from 'https://esm.sh/react-dom@18.2.0/client';
+
+        const App = () => {
+            const [view, setView] = useState('feed');
+            
+            const needs = [
+                { id: 1, title: 'Emergency: Furnace Failure', location: 'Waukesha, WI', urgency: 'Critical', desc: 'Single grandmother. Temperature is dropping. Need HVAC tech.', tokens: 150 },
+                { id: 2, title: 'Coffee & Resume Review', location: 'Milwaukee', urgency: 'Low', desc: 'Recent grad looking for life advice and job search help.', tokens: 25 }
+            ];
+
+            return React.createElement('div', { className: 'min-h-screen flex flex-col' },
+                // Navigation
+                React.createElement('nav', { className: 'bg-white border-b sticky top-0 z-50 p-4' },
+                    React.createElement('div', { className: 'max-w-5xl mx-auto flex justify-between items-center' },
+                        React.createElement('div', { className: 'flex items-center gap-2 font-black text-xl' }, 
+                            React.createElement('div', { className: 'bg-blue-600 p-2 rounded-lg text-white' }, 'S'), 'THE SALT SUPPLY'
+                        ),
+                        React.createElement('div', { className: 'flex gap-6 font-bold text-sm text-slate-500' },
+                            React.createElement('button', { onClick: () => setView('feed'), className: view === 'feed' ? 'text-blue-600' : '' }, 'Need Feed'),
+                            React.createElement('button', { onClick: () => setView('social'), className: view === 'social' ? 'text-blue-600' : '' }, 'Social Space')
+                        )
+                    )
+                ),
+                // Content
+                React.createElement('main', { className: 'max-w-4xl mx-auto p-6 py-12 flex-1 w-full' },
+                    view === 'feed' ? 
+                    React.createElement('div', { className: 'space-y-8' },
+                        React.createElement('h1', { className: 'text-5xl font-black tracking-tighter' }, 'Need Feed'),
+                        needs.map(n => React.createElement('div', { key: n.id, className: 'bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm' },
+                            React.createElement('div', { className: 'flex justify-between mb-4' },
+                                React.createElement('h3', { className: 'text-2xl font-black' }, n.title),
+                                React.createElement('span', { className: 'bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-bold' }, n.urgency)
+                            ),
+                            React.createElement('p', { className: 'text-slate-600 italic mb-6' }, n.desc),
+                            React.createElement('div', { className: 'flex justify-between items-center border-t pt-4' },
+                                React.createElement('span', { className: 'font-black text-amber-500' }, n.tokens + ' Salt Tokens'),
+                                React.createElement('button', { className: 'bg-slate-900 text-white px-6 py-2 rounded-xl font-bold' }, 'Respond')
+                            )
+                        ))
+                    ) : 
+                    React.createElement('div', { className: 'bg-blue-600 text-white p-12 rounded-[3rem]' },
+                        React.createElement('h2', { className: 'text-4xl font-black mb-4' }, 'The Commons'),
+                        React.createElement('p', { className: 'text-xl opacity-90 mb-8' }, 'Where asking for help is an act of belonging.')
+                    )
+                ),
+                // Footer
+                React.createElement('footer', { className: 'bg-slate-900 text-slate-500 p-12 text-center text-xs font-bold' },
+                    '© 2026 THE SALT SUPPLY. THE WISCONSIN CORRIDOR PROJECT.'
+                )
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('app'));
+        root.render(React.createElement(App));
+    </script>
+</body>
+</html>
